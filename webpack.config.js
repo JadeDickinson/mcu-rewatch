@@ -3,8 +3,6 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-console.log(path.resolve(__dirname, "test"));
-
 module.exports = {
     // watch: true,
     entry: "./site/index.ts",
