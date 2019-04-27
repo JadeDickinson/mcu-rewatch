@@ -10,7 +10,12 @@ module.exports = function(config) {
             "**/*.spec.ts": ["webpack", "sourcemap"]
         },
         webpack: webpackConfig,
-        reporters: ["spec"],
-        browsers: ["ChromeHeadless"]
+        reporters: ["spec", "junit"],
+        browsers: ["ChromeHeadless"],
+        junitReporter: {
+            outputDir: process.env.JUNIT_REPORT_PATH,
+            outputFile: process.env.JUNIT_REPORT_NAME,
+            useBrowserName: false
+        }
     });
 }
