@@ -1,7 +1,8 @@
 import { SinonMock, mock } from "sinon";
-import { createMovieOrderingIdentifier } from "../site/lib/util";
+import { createMovieOrderingIdentifier, createMovieStorageIdentifier } from "../site/lib/util";
 import { expect } from "chai";
 import MovieRepository from "../site/lib/MovieRepository";
+import { MovieIdentifier, WatchMap } from "../site/lib/types";
 
 class MockStorage implements Storage {
     [name: string]: any;
@@ -23,6 +24,8 @@ describe("MovieRepository", () => {
     let storage : MockStorage;
     let storageMock : SinonMock;
 
+    const MOVIE_SERIES_NAME : string = "movie-series";
+
     beforeEach(() => {
         storageMock = mock(MockStorage.prototype);
         storage = new MockStorage();
@@ -30,9 +33,27 @@ describe("MovieRepository", () => {
     });
     
     describe("fetchMovieWatchData", () => {
+        const MOVIE_ID = 1;
+        const EXPECTED_ARG : string = createMovieStorageIdentifier(MOVIE_SERIES_NAME, MOVIE_ID);
+        const EXPECTED_RET_VALUE: string = "true";
+        const MOVIE_IDENTIFIERS_FIXTURE : MovieIdentifier[] = [
+            {
+                id: MOVIE_ID,
+                storageID: EXPECTED_ARG
+            }
+        ];
+        const WATCH_MAP_FIXTURE : WatchMap = {
+            [1]: true
+        };
 
         it("should get the movie watch data from storage", () => {
-            expect.fail();
+            storageMock.expects("getItem").once().withExactArgs(EXPECTED_ARG).returns(EXPECTED_RET_VALUE);
+
+            let watchInfo : WatchMap = movieRepository.fetchMovieWatchData(MOVIE_IDENTIFIERS_FIXTURE);
+
+            storageMock.verify();
+            expect(Object.keys(watchInfo).length).to.equal(1);
+            expect(watchInfo[MOVIE_ID]).to.equal(WATCH_MAP_FIXTURE[MOVIE_ID]);
         });
 
         it("should throw an error if storage not available", () => {
@@ -40,17 +61,29 @@ describe("MovieRepository", () => {
         });
 
         it("should throw an error if there was an error getting movie watch data from storage", () => {
-            expect.fail();
+            storageMock.expects("getItem").once().withExactArgs(EXPECTED_ARG).throwsException("Exception");
+
+            try {
+                movieRepository.fetchMovieWatchData(MOVIE_IDENTIFIERS_FIXTURE);
+                expect.fail();
+            } catch (e) {
+                storageMock.verify();
+            }
         });
 
-        it("should throw an error if null is returned from storage", () => {
-            expect.fail();
+        it("should have watch data of false if null is returned from storage", () => {
+            storageMock.expects("getItem").once().withExactArgs(EXPECTED_ARG).returns(null);
+
+            let watchInfo : WatchMap = movieRepository.fetchMovieWatchData(MOVIE_IDENTIFIERS_FIXTURE);
+
+            storageMock.verify();
+            expect(Object.keys(watchInfo).length).to.equal(1);
+            expect(watchInfo[MOVIE_ID]).to.equal(false);
         });
 
     });
 
     describe("fetchCurrentOrdering", () => {
-        const MOVIE_SERIES_NAME : string = "movie-series";
         const EXPECTED_ARG : string = createMovieOrderingIdentifier(MOVIE_SERIES_NAME);
         const ORDERING_FIXTURE : string = "my-ordering";
 
