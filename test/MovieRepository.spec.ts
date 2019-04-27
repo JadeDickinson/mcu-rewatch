@@ -1,4 +1,4 @@
-import { SinonMock, mock } from "sinon";
+import { SinonMock, mock, stub } from "sinon";
 import { createMovieOrderingIdentifier, createMovieStorageIdentifier } from "../site/lib/util";
 import { expect } from "chai";
 import MovieRepository from "../site/lib/MovieRepository";
@@ -23,6 +23,8 @@ describe("MovieRepository", () => {
     let movieRepository : MovieRepository;
     let storage : MockStorage;
     let storageMock : SinonMock;
+
+    const REAL_IS_STORAGE_AVAILABLE = require.cache[require.resolve("../site/lib/util")].exports.isStorageAvailable;
 
     const MOVIE_SERIES_NAME : string = "movie-series";
 
@@ -57,7 +59,18 @@ describe("MovieRepository", () => {
         });
 
         it("should throw an error if storage not available", () => {
-            expect.fail();
+            const isStorageAvailableStub = stub();
+            isStorageAvailableStub.returns(false);
+
+            require.cache[require.resolve("../site/lib/util")].exports.isStorageAvailable = isStorageAvailableStub;
+
+            try {
+                movieRepository.fetchMovieWatchData(MOVIE_IDENTIFIERS_FIXTURE);
+                expect.fail();
+            } catch (e) {
+                expect(e instanceof Error);
+                expect((<Error>e).message.toLowerCase()).to.contain("storage not available");
+            }
         });
 
         it("should throw an error if there was an error getting movie watch data from storage", () => {
@@ -81,6 +94,10 @@ describe("MovieRepository", () => {
             expect(watchInfo[MOVIE_ID]).to.equal(false);
         });
 
+        afterEach(() => {
+            require.cache[require.resolve("../site/lib/util")].exports.isStorageAvailable = REAL_IS_STORAGE_AVAILABLE;
+        });
+
     });
 
     describe("fetchCurrentOrdering", () => {
@@ -97,7 +114,18 @@ describe("MovieRepository", () => {
         });
 
         it("should throw an error if storage not available", () => {
-            expect.fail();
+            const isStorageAvailableStub = stub();
+            isStorageAvailableStub.returns(false);
+
+            require.cache[require.resolve("../site/lib/util")].exports.isStorageAvailable = isStorageAvailableStub;
+
+            try {
+                movieRepository.fetchCurrentOrdering(MOVIE_SERIES_NAME);
+                expect.fail();
+            } catch (e) {
+                expect(e instanceof Error);
+                expect((<Error>e).message.toLowerCase()).to.contain("storage not available");
+            }
         });
 
         it("should throw an error if there was an error getting current ordering name from storage", () => {
@@ -106,6 +134,10 @@ describe("MovieRepository", () => {
 
         it("should throw an error if null is returned from storage", () => {
             expect.fail();
+        });
+
+        afterEach(() => {
+            require.cache[require.resolve("../site/lib/util")].exports.isStorageAvailable = REAL_IS_STORAGE_AVAILABLE;
         });
 
     });

@@ -11,8 +11,7 @@ export default class MovieRepository {
 
     public fetchMovieWatchData(identifiers: MovieIdentifier[]): WatchMap {
         if (!isStorageAvailable(this.storage)) {
-            console.error("Storage not available");
-            return;
+            throw new Error("Storage not available");
         }
         
         var watched: WatchMap = {};
@@ -27,6 +26,10 @@ export default class MovieRepository {
 
     // TODO change movieName to movieSeriesName
     public fetchCurrentOrdering(movieName : string): string {
+        if (!isStorageAvailable(this.storage)) {
+            throw new Error("Storage not available");
+        }
+        
         return this.storage.getItem(createMovieOrderingIdentifier(movieName));
     }
 
