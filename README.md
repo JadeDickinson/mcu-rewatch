@@ -1,4 +1,5 @@
 # mcu-rewatch
+[![CircleCI](https://circleci.com/gh/Coteh/mcu-rewatch.svg?style=svg)](https://circleci.com/gh/Coteh/mcu-rewatch)
 
 ![Preview](Preview.gif "Preview Image")
 
