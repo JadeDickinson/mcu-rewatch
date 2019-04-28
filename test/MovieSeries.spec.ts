@@ -88,9 +88,19 @@ describe("MovieSeries", () => {
             expect(movieSeries.getCurrentOrderingName()).to.equal(DEFAULT_ORDER_NAME);
         }));
 
-        it("should return first value from ordering array as fallback if repository not available", () => {
-            expect.fail();
-        });
+        it("should return an empty string if no movie ordering preference has been saved to repository", test(function () {
+            let fetchMovieOrderingStub: SinonStub = this.stub(MovieRepository.prototype, "fetchCurrentOrdering");
+            fetchMovieOrderingStub.returns("");
+
+            expect(movieSeries.getCurrentOrderingName()).to.equal("");
+        }));
+
+        it("should throw an exception if repository not available", test(function () {
+            let fetchMovieOrderingStub: SinonStub = this.stub(MovieRepository.prototype, "fetchCurrentOrdering");
+            fetchMovieOrderingStub.throwsException(new Error("storage not available"));
+
+            expect(movieSeries.getCurrentOrderingName).to.throw(Error);
+        }));
     });
 
     describe("getMovieWatchedData", () => {

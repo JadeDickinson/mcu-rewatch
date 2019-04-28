@@ -34,7 +34,8 @@ export default class MovieSeries {
     }
 
     public getCurrentOrderingName() : string {
-        return this.repository.fetchCurrentOrdering(this.name);
+        let currentOrdering: string = this.repository.fetchCurrentOrdering(this.name);
+        return currentOrdering != null ? currentOrdering : "";
     }
 
     public getMovieWatchedData() : WatchMap {
