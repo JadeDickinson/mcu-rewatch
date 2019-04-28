@@ -18,13 +18,24 @@ class MockStorage implements Storage {
     setItem(key: string, value: string): void {}
 };
 
+const REAL_IS_STORAGE_AVAILABLE = require.cache[require.resolve("../site/lib/util")].exports.isStorageAvailable;
+
+function mockIsStorageAvailable(result : boolean) : void {
+    const isStorageAvailableStub = stub();
+    isStorageAvailableStub.returns(result);
+
+    require.cache[require.resolve("../site/lib/util")].exports.isStorageAvailable = isStorageAvailableStub;
+}
+
+function clearIsStorageAvailableMock() : void {
+    require.cache[require.resolve("../site/lib/util")].exports.isStorageAvailable = REAL_IS_STORAGE_AVAILABLE;
+}
+
 describe("MovieRepository", () => {
 
     let movieRepository : MovieRepository;
     let storage : MockStorage;
     let storageMock : SinonMock;
-
-    const REAL_IS_STORAGE_AVAILABLE = require.cache[require.resolve("../site/lib/util")].exports.isStorageAvailable;
 
     const MOVIE_SERIES_NAME : string = "movie-series";
 
@@ -59,10 +70,7 @@ describe("MovieRepository", () => {
         });
 
         it("should throw an error if storage not available", () => {
-            const isStorageAvailableStub = stub();
-            isStorageAvailableStub.returns(false);
-
-            require.cache[require.resolve("../site/lib/util")].exports.isStorageAvailable = isStorageAvailableStub;
+            mockIsStorageAvailable(false);
 
             try {
                 movieRepository.fetchMovieWatchData(MOVIE_IDENTIFIERS_FIXTURE);
@@ -95,7 +103,7 @@ describe("MovieRepository", () => {
         });
 
         afterEach(() => {
-            require.cache[require.resolve("../site/lib/util")].exports.isStorageAvailable = REAL_IS_STORAGE_AVAILABLE;
+            clearIsStorageAvailableMock();
         });
 
     });
@@ -114,10 +122,7 @@ describe("MovieRepository", () => {
         });
 
         it("should throw an error if storage not available", () => {
-            const isStorageAvailableStub = stub();
-            isStorageAvailableStub.returns(false);
-
-            require.cache[require.resolve("../site/lib/util")].exports.isStorageAvailable = isStorageAvailableStub;
+            mockIsStorageAvailable(false);
 
             try {
                 movieRepository.fetchCurrentOrdering(MOVIE_SERIES_NAME);
@@ -129,47 +134,109 @@ describe("MovieRepository", () => {
         });
 
         it("should throw an error if there was an error getting current ordering name from storage", () => {
-            expect.fail();
-        });
+            storageMock.expects("getItem").once().withExactArgs(EXPECTED_ARG).throwsException("Exception");
 
-        it("should throw an error if null is returned from storage", () => {
-            expect.fail();
+            try {
+                movieRepository.fetchCurrentOrdering(MOVIE_SERIES_NAME);
+                expect.fail();
+            } catch (e) {
+                storageMock.verify();
+            }
         });
 
         afterEach(() => {
-            require.cache[require.resolve("../site/lib/util")].exports.isStorageAvailable = REAL_IS_STORAGE_AVAILABLE;
+            clearIsStorageAvailableMock();
         });
 
     });
 
     describe("saveWatchedStatus", () => {
+        const MOVIE_ID : number = 1;
+        const WATCHED_STATUS_FIXTURE : boolean = true;
+        const EXPECTED_ARGS: string[] = [createMovieStorageIdentifier(MOVIE_SERIES_NAME, MOVIE_ID), WATCHED_STATUS_FIXTURE.toString()];
         
         it("should save watch data to storage", () => {
-            expect.fail();
+            mockIsStorageAvailable(true);
+
+            storageMock.expects("setItem").once().withExactArgs(...EXPECTED_ARGS);
+
+            movieRepository.saveWatchedStatus(MOVIE_SERIES_NAME, MOVIE_ID, true);
+
+            storageMock.verify();
         });
 
         it("should throw an error if storage not available", () => {
-            expect.fail();
+            mockIsStorageAvailable(false);
+
+            try {
+                movieRepository.saveWatchedStatus(MOVIE_SERIES_NAME, MOVIE_ID, true);
+                expect.fail();
+            } catch (e) {
+                expect(e instanceof Error);
+                expect((<Error>e).message.toLowerCase()).to.contain("storage not available");
+            }
         });
 
         it("should throw an error if there was an error saving watch data to storage", () => {
-            expect.fail();
+            mockIsStorageAvailable(true);
+
+            storageMock.expects("setItem").once().throwsException("Exception");
+
+            try {
+                movieRepository.saveWatchedStatus(MOVIE_SERIES_NAME, MOVIE_ID, true);
+                expect.fail();
+            } catch (e) {
+                storageMock.verify();
+            }
+        });
+
+        afterEach(() => {
+            clearIsStorageAvailableMock();
         });
 
     });
 
     describe("saveCurrentOrdering", () => {
+        const ORDERING_FIXTURE: string = "my-ordering";
+        const EXPECTED_ARGS: string[] = [createMovieOrderingIdentifier(MOVIE_SERIES_NAME), ORDERING_FIXTURE];
 
         it("should save ordering name to storage", () => {
-            expect.fail();
+            mockIsStorageAvailable(true);
+
+            storageMock.expects("setItem").once().withExactArgs(...EXPECTED_ARGS);
+
+            movieRepository.saveCurrentOrdering(MOVIE_SERIES_NAME, ORDERING_FIXTURE);
+
+            storageMock.verify();
         });
 
         it("should throw an error if storage not available", () => {
-            expect.fail();
+            mockIsStorageAvailable(false);
+
+            try {
+                movieRepository.saveCurrentOrdering(MOVIE_SERIES_NAME, ORDERING_FIXTURE);
+                expect.fail();
+            } catch (e) {
+                expect(e instanceof Error);
+                expect((<Error>e).message.toLowerCase()).to.contain("storage not available");
+            }
         });
 
         it("should throw an error if there was an error saving ordering name to storage", () => {
-            expect.fail();
+            mockIsStorageAvailable(true);
+
+            storageMock.expects("setItem").once().throwsException("Exception");
+
+            try {
+                movieRepository.saveCurrentOrdering(MOVIE_SERIES_NAME, ORDERING_FIXTURE);
+                expect.fail();
+            } catch (e) {
+                storageMock.verify();
+            }
+        });
+
+        afterEach(() => {
+            clearIsStorageAvailableMock();
         });
 
     });

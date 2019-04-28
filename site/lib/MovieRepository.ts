@@ -35,13 +35,17 @@ export default class MovieRepository {
 
     public saveWatchedStatus(movieName: string, movieID: number, watched: boolean) {
         if (!isStorageAvailable(this.storage)) {
-            console.error("Local storage not available, cannot save");
-            return;
+            throw new Error("Storage not available");
         }
+
         this.storage.setItem(createMovieStorageIdentifier(movieName, movieID), watched.toString());
     }
 
     public saveCurrentOrdering(movieName: string, ordering: string): void {
+        if (!isStorageAvailable(this.storage)) {
+            throw new Error("Storage not available");
+        }
+        
         this.storage.setItem(createMovieOrderingIdentifier(movieName), ordering);
     }
 
