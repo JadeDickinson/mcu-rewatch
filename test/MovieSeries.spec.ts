@@ -9,6 +9,8 @@ import { OrderingMap } from "../site/lib/types";
 
 const test = sinonTest.configureTest(sinon);
 
+const STORAGE_NOT_AVAILABLE_MESSAGE = "storage not available";
+
 describe("MovieSeries", () => {
 
     const MOVIE_SERIES_NAME_FIXTURE : string = "test";
@@ -105,7 +107,7 @@ describe("MovieSeries", () => {
 
         it("should throw an exception if there was an error with repository", test(function () {
             let fetchMovieOrderingStub: SinonStub = this.stub(MovieRepository.prototype, "fetchCurrentOrdering");
-            fetchMovieOrderingStub.throwsException(new Error("storage not available"));
+            fetchMovieOrderingStub.throwsException(new Error(STORAGE_NOT_AVAILABLE_MESSAGE));
 
             expect(movieSeries.getCurrentOrderingName).to.throw(Error);
         }));
@@ -128,7 +130,7 @@ describe("MovieSeries", () => {
 
         it("should throw an exception if there was an error with repository", test(function() {
             let fetchMovieDataStub: SinonStub = this.stub(MovieRepository.prototype, "fetchMovieWatchData");
-            fetchMovieDataStub.throwsException(new Error("storage not available"));
+            fetchMovieDataStub.throwsException(new Error(STORAGE_NOT_AVAILABLE_MESSAGE));
 
             expect(movieSeries.getMovieWatchedData).to.throw(Error);
         }));
@@ -148,7 +150,7 @@ describe("MovieSeries", () => {
         it("should not attempt to save watch status of a movie if there was an error with repository", test(function() {
             let saveWatchedStatusMock: SinonMock = this.mock(MovieRepository.prototype);
 
-            saveWatchedStatusMock.expects("saveWatchedStatus").once().throws(new Error("storage not available"));
+            saveWatchedStatusMock.expects("saveWatchedStatus").once().throws(new Error(STORAGE_NOT_AVAILABLE_MESSAGE));
 
             try {
                 movieSeries.saveWatchedStatus(FIRST_MOVIE.id, true);
@@ -173,7 +175,7 @@ describe("MovieSeries", () => {
         it("should not attempt to save movie ordering preference if there was an error with repository", test(function () {
             let saveOrderingMock: SinonMock = this.mock(MovieRepository.prototype);
 
-            saveOrderingMock.expects("saveCurrentOrdering").once().throws(new Error("storage not available"));
+            saveOrderingMock.expects("saveCurrentOrdering").once().throws(new Error(STORAGE_NOT_AVAILABLE_MESSAGE));
 
             try {
                 movieSeries.saveCurrentOrdering(ALTERNATIVE_ORDER_NAME);
