@@ -16,6 +16,10 @@ export default class MovieSeries {
         this.repository = repository;
     }
 
+    public getNumberOfMovies() : number {
+        return this.movies.length;
+    }
+
     public verifyOrdering(ordering: string): boolean {
         return (ordering in this.orderings);
     }

@@ -10,7 +10,6 @@ import Vue from "vue";
 import MCUMovie from "./MCUMovie.vue";
 import MovieSeries from '../lib/MovieSeries';
 import { Movie } from "../lib/types";
-import { NUMBER_OF_MCU_MOVIES } from '../lib/constants';
 
 export default {
     props: {
@@ -22,7 +21,7 @@ export default {
     data: function() {
         return {
             watched: this.movieModel.getMovieWatchedData(),
-            show: (<Array<boolean>>new Array(NUMBER_OF_MCU_MOVIES)).fill(false)
+            show: (<Array<boolean>>new Array(this.movieModel.getNumberOfMovies())).fill(false)
         }
     },
     computed: {
@@ -34,7 +33,7 @@ export default {
         "mcu-movie": MCUMovie
     },
     created: function() {
-        for (let i : number = 0; i < NUMBER_OF_MCU_MOVIES; i++) {
+        for (let i : number = 0; i < this.movieModel.getNumberOfMovies(); i++) {
             let initialSeconds : number = (200 * (i + 1));
             let speedupFactor : number = 1 + (i / 14);
             setTimeout((index : number) => {
