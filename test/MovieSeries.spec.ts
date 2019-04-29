@@ -60,8 +60,16 @@ describe("MovieSeries", () => {
             expect(movieSeq[1].title).to.equal(FIRST_MOVIE.title);
         });
 
-        it("should throw an exception if attempting to get movies by an ordering that does not exist", () => {
-            expect.fail();
+        it("should return empty array if attempting to get movies by an ordering that does not exist", () => {
+            let movieSeq : any[];
+
+            try {
+                movieSeq = movieSeries.getMoviesByOrder("not-an-ordering");
+            } catch (e) {
+                expect.fail(e.message);
+            }
+
+            expect(movieSeq.length).to.equal(0);
         });
     });
 
@@ -95,7 +103,7 @@ describe("MovieSeries", () => {
             expect(movieSeries.getCurrentOrderingName()).to.equal("");
         }));
 
-        it("should throw an exception if repository not available", test(function () {
+        it("should throw an exception if there was an error with repository", test(function () {
             let fetchMovieOrderingStub: SinonStub = this.stub(MovieRepository.prototype, "fetchCurrentOrdering");
             fetchMovieOrderingStub.throwsException(new Error("storage not available"));
 
@@ -118,8 +126,11 @@ describe("MovieSeries", () => {
             });
         }));
 
-        it("should return a fallback array with all watched values set to false if there was an error with repository", test(function() {
-            expect.fail();
+        it("should throw an exception if there was an error with repository", test(function() {
+            let fetchMovieDataStub: SinonStub = this.stub(MovieRepository.prototype, "fetchMovieWatchData");
+            fetchMovieDataStub.throwsException(new Error("storage not available"));
+
+            expect(movieSeries.getMovieWatchedData).to.throw(Error);
         }));
     });
 
@@ -134,8 +145,17 @@ describe("MovieSeries", () => {
             saveWatchedStatusMock.verify();
         }));
 
-        it("should not attempt to save watch status of a movie if repository not available", test(function() {
-            expect.fail();
+        it("should not attempt to save watch status of a movie if there was an error with repository", test(function() {
+            let saveWatchedStatusMock: SinonMock = this.mock(MovieRepository.prototype);
+
+            saveWatchedStatusMock.expects("saveWatchedStatus").once().throws(new Error("storage not available"));
+
+            try {
+                movieSeries.saveWatchedStatus(FIRST_MOVIE.id, true);
+                expect.fail();
+            } catch (e) {
+                saveWatchedStatusMock.verify();
+            }
         }));
     });
 
@@ -150,9 +170,18 @@ describe("MovieSeries", () => {
             saveOrderingMock.verify();
         }));
 
-        it("should not attempt to save movie ordering preference if repository not available", () => {
-            expect.fail();
-        });
+        it("should not attempt to save movie ordering preference if there was an error with repository", test(function () {
+            let saveOrderingMock: SinonMock = this.mock(MovieRepository.prototype);
+
+            saveOrderingMock.expects("saveCurrentOrdering").once().throws(new Error("storage not available"));
+
+            try {
+                movieSeries.saveCurrentOrdering(ALTERNATIVE_ORDER_NAME);
+                expect.fail();
+            } catch (e) {
+                saveOrderingMock.verify();
+            }
+        }));
     });
 
 });
