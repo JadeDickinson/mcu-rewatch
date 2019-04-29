@@ -20,16 +20,13 @@ export default class MovieSeries {
         return (ordering in this.orderings);
     }
 
-    public getMoviesByOrder(orderName: string): any[] {
+    public getMoviesByOrder(orderName: string): Movie[] {
         if (!this.verifyOrdering(orderName)) {
             return [];
         }
 
         return this.orderings[orderName].map((movieID) => {
-            var movie = this.movies[movieID];
-            return Object.assign({
-                watched: false
-            }, movie);
+            return this.movies[movieID];
         });
     }
 

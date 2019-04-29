@@ -9,6 +9,7 @@
 import Vue from "vue";
 import MCUMovie from "./MCUMovie.vue";
 import MovieSeries from '../lib/MovieSeries';
+import { Movie } from "../lib/types";
 import { NUMBER_OF_MCU_MOVIES } from '../lib/constants';
 
 export default {
@@ -25,11 +26,8 @@ export default {
         }
     },
     computed: {
-        items: function() {
-            return this.movieModel.getMoviesByOrder(this.ordering).map((item : any) => {
-                item.watched = this.watched[item.id];
-                return item;
-            });
+        items: function() : Movie[] {
+            return this.movieModel.getMoviesByOrder(this.ordering);
         },
     },
     components: {
