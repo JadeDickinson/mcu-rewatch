@@ -80,19 +80,36 @@ describe("MCUMovie", () => {
                 watched: false
             });
             
-            // wrapper.vm.toggleWatch(); // TODO find a way to call this method in a way that TypeScript will understand
+            wrapper.vm.toggleWatch(); // TODO find a way to call this method in a way that TypeScript will understand
 
-            expect.fail();
+            expect(wrapper.vm.watched).to.equal(true);
         });
 
         it("should toggle watched status from watched to unwatched", () => {
             movieSeriesMock.expects("saveWatchedStatus").once().withExactArgs(MOVIE_ID_FIXTURE, false);
             
-            expect.fail();
+            wrapper.setData({
+                watched: true
+            });
+            
+            wrapper.vm.toggleWatch(); // TODO find a way to call this method in a way that TypeScript will understand
+
+            expect(wrapper.vm.watched).to.equal(false);
         });
 
         it("should throw an exception if watched status couldn't be saved to model", () => {
-            expect.fail();
+            movieSeriesMock.expects("saveWatchedStatus").once().throwsException(new Error("Bad stuff happens"));
+
+            wrapper.setData({
+                watched: false
+            });
+
+            try {
+                wrapper.vm.toggleWatch();
+                expect.fail();
+            } catch (e) {
+                movieSeriesMock.verify();
+            }
         });
 
         afterEach(() => {
