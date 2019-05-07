@@ -7,32 +7,37 @@
 
 <script lang="ts">
 import Vue from "vue";
+import Component from "vue-class-component";
 import MCUMovie from "./MCUMovie.vue";
 import MovieSeries from '../lib/MovieSeries';
 import { Movie } from "../lib/types";
+import { VueConstructor } from "vue";
 
-export default {
+export const MCUMovieListVue = Vue.extend({
     props: {
         ordering: String,
         movieModel: {
             type: Object as () => MovieSeries
         }
-    },
-    data: function() {
-        return {
-            watched: this.movieModel.getMovieWatchedData(),
-            show: (<Array<boolean>>new Array(this.movieModel.getNumberOfMovies())).fill(false)
-        }
-    },
-    computed: {
-        items: function() : Movie[] {
-            return this.movieModel.getMoviesByOrder(this.ordering);
-        },
-    },
+    }
+})
+
+@Component({
     components: {
         "mcu-movie": MCUMovie
-    },
-    created: function() {
+    },    
+})
+export default class MCUMovieList extends MCUMovieListVue {
+
+    watched: any = this.movieModel.getMovieWatchedData();
+
+    show: any = (<Array<boolean>>new Array(this.movieModel.getNumberOfMovies())).fill(false);
+    
+    get items () : Movie[] {
+        return this.movieModel.getMoviesByOrder(this.ordering);
+    }
+    
+    created () {
         for (let i : number = 0; i < this.movieModel.getNumberOfMovies(); i++) {
             let initialSeconds : number = (200 * (i + 1));
             let speedupFactor : number = 1 + (i / 14);
@@ -40,7 +45,7 @@ export default {
                 Vue.set(this.show, index, true);
             }, initialSeconds / speedupFactor, i)
         }
-    },
+    }
 };
 </script>
 

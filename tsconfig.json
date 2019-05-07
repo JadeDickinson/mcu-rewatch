@@ -7,7 +7,8 @@
         "target": "es6",
         "downlevelIteration": true,
         "rootDirs": ["site"],
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "experimentalDecorators": true
     },
     "exclude": [
         "node_modules"

@@ -7,7 +7,7 @@ import MCUMovieList from "../site/components/MCUMovieList.vue";
 import MovieSeries from "../site/lib/MovieSeries";
 
 describe("MCUMovieList", () => {
-    let wrapper: Wrapper<Vue>;
+    let wrapper: Wrapper<MCUMovieList>;
 
     let movieModelStub : MovieSeries;
     let mockGetMovieWatchedData : SinonStub;
