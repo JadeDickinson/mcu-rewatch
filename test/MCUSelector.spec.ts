@@ -1,7 +1,7 @@
 import Vue from "Vue";
 import { shallowMount, Wrapper, WrapperArray } from "@vue/test-utils";
 import { expect } from "chai";
-import { createSandbox, SinonStub, SinonSandbox } from "sinon";
+import { SinonStub, SinonSandbox } from "sinon";
 import MCUSelector from "../site/components/MCUSelector.vue";
 import MovieSeries from "../site/lib/MovieSeries";
 import { DEFAULT_MCU_ORDER } from "../site/lib/constants"; 
@@ -11,7 +11,7 @@ import * as sinon from "sinon";
 const test = sinonTest.configureTest(sinon);
 
 describe("MCUSelector", () => {
-    let wrapper : Wrapper<Vue>;
+    let wrapper : Wrapper<MCUSelector>;
 
     let movieModelStub : MovieSeries;
 
