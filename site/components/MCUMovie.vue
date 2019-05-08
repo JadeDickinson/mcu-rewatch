@@ -43,7 +43,6 @@ export default class MCUMovie extends MCUMovieVue {
 
     created () {
         this.watched = this.presetWatched;
-        this.show = true;
     }
 
 };
