@@ -10,9 +10,11 @@
 
 <script lang="ts">
 import Vue from "vue";
+import Component from "vue-class-component";
 import MovieSeries from '../lib/MovieSeries';
+import { VueConstructor } from "vue";
 
-export default {
+export const MCUMovieVue = Vue.extend({
     props: {
         movieId: Number,
         show: Boolean,
@@ -20,29 +22,31 @@ export default {
         movieModel: {
             type: Object as () => MovieSeries
         }
-    },
-    data: function() {
-        return {
-            loaded: false,
-            watched: false
-        }
-    },
-    computed: {
-        url: function () {
-            return "assets/img/" + this.movieId + ".jpg";
-        },
-    },
-    methods: {
-        toggleWatch: function () {
-            var newWatched = (this.watched) ? false : true;
-            this.$set(this, "watched", newWatched);
-            this.movieModel.saveWatchedStatus(this.movieId, newWatched);
-        }
-    },
-    created: function() {
-        this.watched = this.presetWatched;
     }
-}
+});
+
+@Component
+export default class MCUMovie extends MCUMovieVue {
+
+    loaded: boolean = false;
+    watched: boolean = false;
+
+    get url () {
+        return "assets/img/" + this.movieId + ".jpg";
+    }
+
+    toggleWatch () {
+        var newWatched = (this.watched) ? false : true;
+        this.$set(this, "watched", newWatched);
+        this.movieModel.saveWatchedStatus(this.movieId, newWatched);
+    }
+
+    created () {
+        this.watched = this.presetWatched;
+        this.show = true;
+    }
+
+};
 </script>
 
 <style scoped lang="css">

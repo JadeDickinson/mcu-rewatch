@@ -6,7 +6,7 @@ import MCUMovie from "../site/components/MCUMovie.vue";
 import MovieSeries from "../site/lib/MovieSeries";
 
 describe("MCUMovie", () => {
-    let wrapper: Wrapper<Vue>;
+    let wrapper: Wrapper<MCUMovie>;
 
     beforeEach(() => {
         wrapper = shallowMount(MCUMovie);

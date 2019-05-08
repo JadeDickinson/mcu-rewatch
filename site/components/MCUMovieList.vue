@@ -46,6 +46,7 @@ export default class MCUMovieList extends MCUMovieListVue {
             }, initialSeconds / speedupFactor, i)
         }
     }
+    
 };
 </script>
 
