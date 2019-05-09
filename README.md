@@ -18,9 +18,7 @@ A nifty little web application I built to keep track of my MCU rewatch progress 
 
 1. Navigate to folder and run `npm install` to install all node dependencies.
 
-1. Run the following command to generate TypeScript declaration (`.d.ts`) files for Vue components.
-
-`npm run vuetype` 
+1. Run `npm run vuetype` to generate TypeScript declaration (`.d.ts`) files for Vue components.
 
 1. Run `npm run build` to build webpack bundle from source files.
 
