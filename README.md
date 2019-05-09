@@ -35,12 +35,9 @@ What resulted from this idea is a simple to use tool to quickly keep track of pr
 I also thought this would be a good first project to get my feet wet with Vue, so there's that. :)
 
 ## Issues
-- Tests not complete. I have been struggling in this area and as a result could not release this project until now, but I am currently happy with my setup of Karma + Webpack + Headless Chrome + Sinon & Chai. Currently just learning best practices for testing and mocking of Vue components and the library functions I have written in TypeScript.
 - Improve the look of the ordering dropdown with vue-select
-- Use vue-class-component on Vue components to hopefully make it easier to test components using TypeScript.
-- Add Circle CI support for automated test execution
 - Condense webpack build if possible
-- See the Issues page for more
+- See the [Issues](https://github.com/Coteh/mcu-rewatch/issues) page for more
 
 ## Future Additions?
 - One click save to PNG, JPEG, etc.
