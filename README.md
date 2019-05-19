@@ -20,6 +20,8 @@ A nifty little web application I built to keep track of my MCU rewatch progress 
 
 1. Run `npm run vuetype` to generate TypeScript declaration (`.d.ts`) files for Vue components.
 
+1. Run `npm run dl-posters` to download MCU movie posters from IMDb if they haven't already been downloaded.
+
 1. Run `npm run build` to build webpack bundle from source files.
 
 1. Run `npm start` to run the server (currently just a static-serving Express server).
