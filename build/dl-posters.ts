@@ -2,6 +2,8 @@ import * as fs from "fs";
 import * as path from "path";
 import * as request from "request";
 
+import { NUMBER_OF_MCU_MOVIES } from "../site/lib/constants";
+
 const ROOT_PATH : string = path.resolve(__dirname, "..");
 
 const BASE_DOWNLOAD_PATH : string = path.resolve(ROOT_PATH, "site", "assets", "img");
@@ -16,7 +18,7 @@ files.forEach((file) => {
     fileMap[file] = true;
 });
 
-for (let i = 1; i <= 22; i++) {
+for (let i = 1; i <= NUMBER_OF_MCU_MOVIES; i++) {
     // does the file exist in the images folder?
     let filename : string = i.toString() + ".jpg";
     if (fileMap[filename]) {
