@@ -51,7 +51,8 @@ module.exports = {
         new CopyWebpackPlugin([
             {
                 from: "site/assets/img",
-                to: "assets/img"
+                to: "assets/img",
+                ignore: [".gitkeep"]
             }
         ]),
         new VueLoaderPlugin()
