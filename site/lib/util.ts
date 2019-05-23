@@ -1,4 +1,12 @@
-// https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
+/**
+ * Checks availablity of given storage implementation within the browser
+ * 
+ * @remarks
+ * https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
+ * 
+ * @param storage storage to check
+ * @returns whether this storage is available to use
+ */
 export function isStorageAvailable(storage : Storage): boolean {
     try {
         let x: string = "__storage_test__";
@@ -21,10 +29,23 @@ export function isStorageAvailable(storage : Storage): boolean {
     }
 };
 
+/**
+ * Creates the key identifier string to be used for identifying this movie's watched status in storage
+ * 
+ * @param movieName movie series name
+ * @param movieID ID of movie
+ * @returns movie identifier string
+ */
 export function createMovieStorageIdentifier(movieName : string, movieID : number) : string {
     return movieName + "." + movieID;
 };
 
+/**
+ * Creates the key identifier string to be used for identifying this movie series' order in storage
+ * 
+ * @param movieName movie series name
+ * @returns movie ordering identifier string
+ */
 export function createMovieOrderingIdentifier(movieName : string) {
     return movieName + ".ordering";
 };
