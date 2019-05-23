@@ -34,6 +34,9 @@ What resulted from this idea is a simple to use tool to quickly keep track of pr
 
 I also thought this would be a good first project to get my feet wet with Vue, so there's that. :)
 
+## Adding a Movie
+To add a future MCU film, [check the wiki for a step-by-step](https://github.com/Coteh/mcu-rewatch/wiki).
+
 ## Issues
 - Improve the look of the ordering dropdown with vue-select
 - Condense webpack build if possible
