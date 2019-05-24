@@ -15,6 +15,9 @@ import { VueConstructor } from "vue";
 
 const UPDATE_ORDER_ACTION = "update-order";
 
+/**
+ * Props for the MCU movie order selector component
+ */
 export const MCUSelectorVue = Vue.extend({
     props: {
         movieModel: {
@@ -23,6 +26,9 @@ export const MCUSelectorVue = Vue.extend({
     }
 })
 
+/**
+ * Represents the MCU movie order selector on the UI.
+ */
 @Component
 export default class MCUSelector extends MCUSelectorVue {
 

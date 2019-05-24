@@ -13,6 +13,9 @@ import MovieSeries from '../lib/MovieSeries';
 import { Movie } from "../lib/types";
 import { VueConstructor } from "vue";
 
+/**
+ * Props for the MCU movie list component
+ */
 export const MCUMovieListVue = Vue.extend({
     props: {
         ordering: String,
@@ -22,6 +25,11 @@ export const MCUMovieListVue = Vue.extend({
     }
 })
 
+/**
+ * Represents a list of MCU movies on the UI.
+ * Movies are displayed in the order specified by the `ordering` prop,
+ * and they are transitioned in through a sequence defined in the `created` mount.
+ */
 @Component({
     components: {
         "mcu-movie": MCUMovie

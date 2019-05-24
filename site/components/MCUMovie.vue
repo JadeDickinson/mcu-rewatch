@@ -14,6 +14,9 @@ import Component from "vue-class-component";
 import MovieSeries from '../lib/MovieSeries';
 import { VueConstructor } from "vue";
 
+/**
+ * Props for the MCU movie component
+ */
 export const MCUMovieVue = Vue.extend({
     props: {
         movieId: Number,
@@ -25,6 +28,10 @@ export const MCUMovieVue = Vue.extend({
     }
 });
 
+/**
+ * Represents a MCU movie on the UI.
+ * Click on the movie to toggle between watched/unwatched.
+ */
 @Component
 export default class MCUMovie extends MCUMovieVue {
 
