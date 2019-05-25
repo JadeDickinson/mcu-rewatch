@@ -1,4 +1,4 @@
-import Vue from "Vue";
+import Vue from "vue";
 import { shallowMount, Wrapper, WrapperArray } from "@vue/test-utils";
 import { expect } from "chai";
 import { SinonStub, SinonSandbox } from "sinon";

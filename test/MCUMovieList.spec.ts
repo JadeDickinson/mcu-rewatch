@@ -1,4 +1,3 @@
-import Vue from "Vue";
 import { shallowMount, Wrapper, WrapperArray } from "@vue/test-utils";
 import { expect } from "chai";
 import { stub, SinonStub } from "sinon";
