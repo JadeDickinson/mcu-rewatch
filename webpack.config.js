@@ -3,9 +3,16 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
+function getWebpackMode(nodeEnv) {
+    if (!nodeEnv || (nodeEnv !== "production" && nodeEnv !== "none")) {
+        return "development";
+    }
+    return nodeEnv;
+}
+
 module.exports = {
     entry: "./site/index.ts",
-    mode: process.env.NODE_ENV || "development",
+    mode: getWebpackMode(process.env.NODE_ENV),
     devtool: "inline-source-map",
     module: {
         rules: [
