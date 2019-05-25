@@ -4,9 +4,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-    // watch: true,
     entry: "./site/index.ts",
-    mode: "development",
+    mode: process.env.NODE_ENV || "development",
     devtool: "inline-source-map",
     module: {
         rules: [
