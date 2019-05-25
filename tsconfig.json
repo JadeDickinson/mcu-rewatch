@@ -6,11 +6,11 @@
         "module": "commonjs",
         "target": "es6",
         "downlevelIteration": true,
-        "rootDirs": ["site"],
         "resolveJsonModule": true,
         "experimentalDecorators": true
     },
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "**/*.spec.ts"
     ]
 }
