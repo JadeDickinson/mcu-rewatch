@@ -2,6 +2,7 @@ const path = require("path");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const PrintWebpackPlugin = require('./PrintWebpackPlugin');
 
 module.exports = {
     // watch: true,
@@ -55,6 +56,7 @@ module.exports = {
                 ignore: [".gitkeep"]
             }
         ]),
-        new VueLoaderPlugin()
+        new VueLoaderPlugin(),
+        new PrintWebpackPlugin()
     ]
 };
