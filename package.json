@@ -8,6 +8,7 @@
     "build": "webpack --verbose",
     "vuetype": "vuetype site/components",
     "dl-posters": "ts-node build/dl-posters.ts",
+    "full-build": "npm run dl-posters && npm run build",
     "test": "karma start --single-run"
   },
   "author": "",
