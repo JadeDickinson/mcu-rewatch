@@ -32,20 +32,20 @@ export function isStorageAvailable(storage : Storage): boolean {
 /**
  * Creates the key identifier string to be used for identifying this movie's watched status in storage
  * 
- * @param movieName movie series name
+ * @param movieSeriesName movie series name
  * @param movieID ID of movie
  * @returns movie identifier string
  */
-export function createMovieStorageIdentifier(movieName : string, movieID : number) : string {
-    return movieName + "." + movieID;
+export function createMovieStorageIdentifier(movieSeriesName : string, movieID : number) : string {
+    return movieSeriesName + "." + movieID;
 };
 
 /**
  * Creates the key identifier string to be used for identifying this movie series' order in storage
  * 
- * @param movieName movie series name
+ * @param movieSeriesName movie series name
  * @returns movie ordering identifier string
  */
-export function createMovieOrderingIdentifier(movieName : string) {
-    return movieName + ".ordering";
+export function createMovieOrderingIdentifier(movieSeriesName : string) {
+    return movieSeriesName + ".ordering";
 };

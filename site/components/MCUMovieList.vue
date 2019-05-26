@@ -23,7 +23,7 @@ export const MCUMovieListVue = Vue.extend({
             type: Object as () => MovieSeries
         }
     }
-})
+});
 
 /**
  * Represents a list of MCU movies on the UI.

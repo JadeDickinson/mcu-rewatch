@@ -24,7 +24,7 @@ export const MCUSelectorVue = Vue.extend({
             type: Object as () => MovieSeries
         }
     }
-})
+});
 
 /**
  * Represents the MCU movie order selector on the UI.

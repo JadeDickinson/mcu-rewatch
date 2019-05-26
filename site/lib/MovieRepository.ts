@@ -41,46 +41,45 @@ export default class MovieRepository {
 
     /**
      * Given a movie series name, fetches the current ordering setting from storage
-     * TODO change movieName to movieSeriesName
      * 
-     * @param movieName movie series name to fetch current ordering for
+     * @param movieSeriesName movie series name to fetch current ordering for
      * @returns the current ordering of this movie series from storage
      */
-    public fetchCurrentOrdering(movieName : string): string {
+    public fetchCurrentOrdering(movieSeriesName : string): string {
         if (!isStorageAvailable(this.storage)) {
             throw new Error("Storage not available");
         }
         
-        return this.storage.getItem(createMovieOrderingIdentifier(movieName));
+        return this.storage.getItem(createMovieOrderingIdentifier(movieSeriesName));
     }
 
     /**
      * Given a movie series and movie ID, saves the given watched status
      * 
-     * @param movieName movie series name
+     * @param movieSeriesName movie series name
      * @param movieID ID of movie
      * @param watched whether this movie is watched
      */
-    public saveWatchedStatus(movieName: string, movieID: number, watched: boolean): void {
+    public saveWatchedStatus(movieSeriesName: string, movieID: number, watched: boolean): void {
         if (!isStorageAvailable(this.storage)) {
             throw new Error("Storage not available");
         }
 
-        this.storage.setItem(createMovieStorageIdentifier(movieName, movieID), watched.toString());
+        this.storage.setItem(createMovieStorageIdentifier(movieSeriesName, movieID), watched.toString());
     }
 
     /**
      * Saves new ordering setting given movie series
      * 
-     * @param movieName movie series name
+     * @param movieSeriesName movie series name
      * @param ordering new ordering
      */
-    public saveCurrentOrdering(movieName: string, ordering: string): void {
+    public saveCurrentOrdering(movieSeriesName: string, ordering: string): void {
         if (!isStorageAvailable(this.storage)) {
             throw new Error("Storage not available");
         }
         
-        this.storage.setItem(createMovieOrderingIdentifier(movieName), ordering);
+        this.storage.setItem(createMovieOrderingIdentifier(movieSeriesName), ordering);
     }
 
 }
