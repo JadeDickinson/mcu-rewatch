@@ -1,8 +1,8 @@
 {
-  "name": "mcu-rewatch-client",
+  "name": "mcu-rewatch",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Web app to keep track of MCU rewatch progress",
+  "main": "app.js",
   "scripts": {
     "start": "ts-node app.ts",
     "build": "webpack --verbose",
@@ -11,8 +11,8 @@
     "full-build": "npm run dl-posters && npm run build",
     "test": "karma start --single-run"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "James Cote",
+  "license": "MIT",
   "dependencies": {
     "vue": "^2.6.10",
     "express": "^4.16.4"
