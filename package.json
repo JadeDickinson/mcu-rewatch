@@ -2,7 +2,7 @@
   "name": "mcu-rewatch",
   "version": "1.0.0",
   "description": "Web app to keep track of MCU rewatch progress",
-  "main": "app.js",
+  "private": true,
   "scripts": {
     "start": "ts-node app.ts",
     "build": "webpack --verbose",
