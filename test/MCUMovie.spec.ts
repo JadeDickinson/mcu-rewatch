@@ -26,33 +26,39 @@ describe("MCUMovie", () => {
         expect(imgElem.classes()).to.contain("movie");
     });
 
-    it("should have 'grayscale' class if movie not yet watched", () => {
+    it("should have 'grayscale' class if movie not yet watched", async () => {
         wrapper.setData({
             watched: false
         });
+
+        await Vue.nextTick();
 
         let imgElem : Wrapper<Vue> = wrapper.find("img");
 
         expect(imgElem.classes()).to.contain("grayscale");
     });
 
-    it("should not have 'grayscale' class if movie has been watched", () => {
+    it("should not have 'grayscale' class if movie has been watched", async () => {
         wrapper.setData({
             watched: true
         });
+
+        await Vue.nextTick();
 
         let imgElem: Wrapper<Vue> = wrapper.find("img");
 
         expect(imgElem.classes()).to.not.contain("grayscale");
     });
 
-    it("should appear if both loaded and available to show", () => {
+    it("should appear if both loaded and available to show", async () => {
         wrapper.setData({
             loaded: true
         });
         wrapper.setProps({
             show: true
         });
+
+        await Vue.nextTick();
 
         let imgElem: Wrapper<Vue> = wrapper.find("img");
         
@@ -80,7 +86,7 @@ describe("MCUMovie", () => {
                 watched: false
             });
             
-            wrapper.vm.toggleWatch(); // TODO find a way to call this method in a way that TypeScript will understand
+            wrapper.vm.toggleWatch();
 
             expect(wrapper.vm.watched).to.equal(true);
         });
@@ -92,7 +98,7 @@ describe("MCUMovie", () => {
                 watched: true
             });
             
-            wrapper.vm.toggleWatch(); // TODO find a way to call this method in a way that TypeScript will understand
+            wrapper.vm.toggleWatch();
 
             expect(wrapper.vm.watched).to.equal(false);
         });

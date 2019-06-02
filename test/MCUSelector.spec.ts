@@ -17,7 +17,7 @@ describe("MCUSelector", () => {
 
     const TEST_OPTIONS : string[] = ["test1", "test2"];
 
-    beforeEach(test(function() {
+    beforeEach(test(async function() {
         movieModelStub = new MovieSeries("test", [], {}, null);
         movieModelStub.getCurrentOrderingName = this.stub().returns("");
         movieModelStub.verifyOrdering = this.stub().returns(true);
