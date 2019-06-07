@@ -19,7 +19,7 @@ import * as movies from "./assets/data/movies.json";
 import * as importedOrderings from "./assets/data/orderings.json";
 
 const orderings: OrderingMap = Object.assign(importedOrderings, {
-    release: [...Array(NUMBER_OF_MCU_MOVIES).keys()]
+    release: [...Array(NUMBER_OF_MCU_MOVIES)].map((_, index) => index + 1)
 });
 
 const mcuMovies = new MovieSeries("mcu", movies, orderings, new MovieRepository(localStorage));

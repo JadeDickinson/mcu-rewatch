@@ -26,8 +26,8 @@ describe("MovieSeries", () => {
     const ALTERNATIVE_ORDER_NAME = "another-ordering";
     const MOVIES_FIXTURE : Movie[] = [FIRST_MOVIE, SECOND_MOVIE];
     const ORDERINGS_FIXTURE : OrderingMap = {
-        [DEFAULT_ORDER_NAME]: [0,1],
-        [ALTERNATIVE_ORDER_NAME]: [1,0]
+        [DEFAULT_ORDER_NAME]: [1,2],
+        [ALTERNATIVE_ORDER_NAME]: [2,1]
     };
     const MOVIE_REPOSITORY_MOCK : MovieRepository = new MovieRepository(null);
 
