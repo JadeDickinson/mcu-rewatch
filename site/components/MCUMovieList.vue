@@ -41,15 +41,15 @@ export default class MCUMovieList extends MCUMovieListVue {
 
     show: any = (<Array<boolean>>new Array(this.movieModel.getNumberOfMovies())).fill(false);
     
-    get items () : Movie[] {
+    get items (): Movie[] {
         return this.movieModel.getMoviesByOrder(this.ordering);
     }
     
     created () {
-        for (let i : number = 0; i < this.movieModel.getNumberOfMovies(); i++) {
-            let initialSeconds : number = (200 * (i + 1));
-            let speedupFactor : number = 1 + (i / 14);
-            setTimeout((index : number) => {
+        for (let i: number = 0; i < this.movieModel.getNumberOfMovies(); i++) {
+            let initialSeconds: number = (200 * (i + 1));
+            let speedupFactor: number = 1 + (i / 14);
+            setTimeout((index: number) => {
                 Vue.set(this.show, index, true);
             }, initialSeconds / speedupFactor, i)
         }

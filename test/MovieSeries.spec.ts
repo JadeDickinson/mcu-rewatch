@@ -13,7 +13,7 @@ const STORAGE_NOT_AVAILABLE_MESSAGE = "storage not available";
 
 describe("MovieSeries", () => {
 
-    const MOVIE_SERIES_NAME_FIXTURE : string = "test";
+    const MOVIE_SERIES_NAME_FIXTURE: string = "test";
     const FIRST_MOVIE: Movie = {
         title: "Test",
         id: 1
@@ -24,12 +24,12 @@ describe("MovieSeries", () => {
     };
     const DEFAULT_ORDER_NAME = "release";
     const ALTERNATIVE_ORDER_NAME = "another-ordering";
-    const MOVIES_FIXTURE : Movie[] = [FIRST_MOVIE, SECOND_MOVIE];
-    const ORDERINGS_FIXTURE : OrderingMap = {
+    const MOVIES_FIXTURE: Movie[] = [FIRST_MOVIE, SECOND_MOVIE];
+    const ORDERINGS_FIXTURE: OrderingMap = {
         [DEFAULT_ORDER_NAME]: [1,2],
         [ALTERNATIVE_ORDER_NAME]: [2,1]
     };
-    const MOVIE_REPOSITORY_MOCK : MovieRepository = new MovieRepository(null);
+    const MOVIE_REPOSITORY_MOCK: MovieRepository = new MovieRepository(null);
 
     let movieSeries: MovieSeries;
 
@@ -63,7 +63,7 @@ describe("MovieSeries", () => {
         });
 
         it("should return empty array if attempting to get movies by an ordering that does not exist", () => {
-            let movieSeq : any[];
+            let movieSeq: any[];
 
             try {
                 movieSeq = movieSeries.getMoviesByOrder("not-an-ordering");
@@ -92,7 +92,7 @@ describe("MovieSeries", () => {
 
     describe("getCurrentOrderingName", () => {
         it("should get movie ordering preference from repository", test(function() {
-            let fetchMovieOrderingStub : SinonStub = this.stub(MovieRepository.prototype, "fetchCurrentOrdering");
+            let fetchMovieOrderingStub: SinonStub = this.stub(MovieRepository.prototype, "fetchCurrentOrdering");
             fetchMovieOrderingStub.returns(DEFAULT_ORDER_NAME);
 
             expect(movieSeries.getCurrentOrderingName()).to.equal(DEFAULT_ORDER_NAME);
@@ -115,7 +115,7 @@ describe("MovieSeries", () => {
 
     describe("getMovieWatchedData", () => {
         it("should get watch data for all movies from repository", test(function() {
-            let fetchMovieDataStub : SinonStub = this.stub(MovieRepository.prototype, "fetchMovieWatchData");
+            let fetchMovieDataStub: SinonStub = this.stub(MovieRepository.prototype, "fetchMovieWatchData");
             fetchMovieDataStub.returns(MOVIES_FIXTURE.reduce((obj, currVal): WatchMap => {
                 obj[currVal.id] = true;
                 return obj;
@@ -138,7 +138,7 @@ describe("MovieSeries", () => {
 
     describe("saveMCUStatus", () => {
         it("should save watched status of a movie to repository", test(function() {
-            let saveWatchedStatusMock : SinonMock = this.mock(MovieRepository.prototype);
+            let saveWatchedStatusMock: SinonMock = this.mock(MovieRepository.prototype);
 
             saveWatchedStatusMock.expects("saveWatchedStatus").once().withExactArgs(MOVIE_SERIES_NAME_FIXTURE, FIRST_MOVIE.id, true);
 
@@ -163,7 +163,7 @@ describe("MovieSeries", () => {
 
     describe("saveCurrentOrdering", () => {
         it("should save movie ordering preference to repository", test(function() {
-            let saveOrderingMock : SinonMock = this.mock(MovieRepository.prototype);
+            let saveOrderingMock: SinonMock = this.mock(MovieRepository.prototype);
 
             saveOrderingMock.expects("saveCurrentOrdering").once().withExactArgs(MOVIE_SERIES_NAME_FIXTURE, ALTERNATIVE_ORDER_NAME);
 

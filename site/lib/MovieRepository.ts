@@ -45,7 +45,7 @@ export default class MovieRepository {
      * @param movieSeriesName movie series name to fetch current ordering for
      * @returns the current ordering of this movie series from storage
      */
-    public fetchCurrentOrdering(movieSeriesName : string): string {
+    public fetchCurrentOrdering(movieSeriesName: string): string {
         if (!isStorageAvailable(this.storage)) {
             throw new Error("Storage not available");
         }

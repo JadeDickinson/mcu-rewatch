@@ -31,5 +31,5 @@ export type WatchMap = { [movieID: number]: boolean };
  */
 export type MovieIdentifier = {
     storageID: string,
-    id : number
+    id: number
 };

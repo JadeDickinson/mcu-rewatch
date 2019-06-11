@@ -7,7 +7,7 @@
  * @param storage storage to check
  * @returns whether this storage is available to use
  */
-export function isStorageAvailable(storage : Storage): boolean {
+export function isStorageAvailable(storage: Storage): boolean {
     try {
         let x: string = "__storage_test__";
         storage.setItem(x, x);
@@ -36,7 +36,7 @@ export function isStorageAvailable(storage : Storage): boolean {
  * @param movieID ID of movie
  * @returns movie identifier string
  */
-export function createMovieStorageIdentifier(movieSeriesName : string, movieID : number) : string {
+export function createMovieStorageIdentifier(movieSeriesName: string, movieID: number): string {
     return movieSeriesName + "." + movieID;
 };
 
@@ -46,6 +46,6 @@ export function createMovieStorageIdentifier(movieSeriesName : string, movieID :
  * @param movieSeriesName movie series name
  * @returns movie ordering identifier string
  */
-export function createMovieOrderingIdentifier(movieSeriesName : string) {
+export function createMovieOrderingIdentifier(movieSeriesName: string) {
     return movieSeriesName + ".ordering";
 };
