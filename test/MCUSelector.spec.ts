@@ -11,11 +11,11 @@ import * as sinon from "sinon";
 const test = sinonTest.configureTest(sinon);
 
 describe("MCUSelector", () => {
-    let wrapper : Wrapper<MCUSelector>;
+    let wrapper: Wrapper<MCUSelector>;
 
-    let movieModelStub : MovieSeries;
+    let movieModelStub: MovieSeries;
 
-    const TEST_OPTIONS : string[] = ["test1", "test2"];
+    const TEST_OPTIONS: string[] = ["test1", "test2"];
 
     beforeEach(test(async function() {
         movieModelStub = new MovieSeries("test", [], {}, null);
@@ -39,7 +39,7 @@ describe("MCUSelector", () => {
     });
 
     it("should populate the dropdown with options", () => {
-        let resultArr : WrapperArray<Vue> = wrapper.findAll("option");
+        let resultArr: WrapperArray<Vue> = wrapper.findAll("option");
 
         expect(resultArr.length).to.equal(TEST_OPTIONS.length);
 
@@ -49,7 +49,7 @@ describe("MCUSelector", () => {
     });
 
     it("should invoke save operation for correct ordering preference when selected", test(function() {
-        let saveOrderingStub : SinonStub = this.stub(MovieSeries.prototype, "saveCurrentOrdering");
+        let saveOrderingStub: SinonStub = this.stub(MovieSeries.prototype, "saveCurrentOrdering");
         
         const OPTION_TO_SAVE: string = TEST_OPTIONS[1];
 
@@ -58,7 +58,7 @@ describe("MCUSelector", () => {
         
         expect(saveOrderingStub.callCount).to.equal(1);
         
-        let firstCallArgs : any[] = saveOrderingStub.args[0];
+        let firstCallArgs: any[] = saveOrderingStub.args[0];
         expect(firstCallArgs.length).to.equal(1);
         expect(firstCallArgs[0]).to.equal(OPTION_TO_SAVE, "did not invoke save for the correct ordering");
     }));
@@ -72,12 +72,12 @@ describe("MCUSelector", () => {
     }));
 });
 
-function verifyMCUSelectorCurrentlySelected(wrapper : Wrapper<Vue>, sandbox : SinonSandbox, optionFixtures : string[], mockedVerifyResult : boolean) : void {
+function verifyMCUSelectorCurrentlySelected(wrapper: Wrapper<Vue>, sandbox: SinonSandbox, optionFixtures: string[], mockedVerifyResult: boolean): void {
     let verifyStub: SinonStub = sandbox.stub(MovieSeries.prototype, "verifyOrdering");
     let orderingStub: SinonStub = sandbox.stub(MovieSeries.prototype, "getCurrentOrderingName");
-    let orderingOptionsStub : SinonStub = sandbox.stub(MovieSeries.prototype, "getOrderingOptions");
+    let orderingOptionsStub: SinonStub = sandbox.stub(MovieSeries.prototype, "getOrderingOptions");
 
-    const CURR_SELECTED : string = optionFixtures[0];
+    const CURR_SELECTED: string = optionFixtures[0];
 
     verifyStub.returns(mockedVerifyResult);
     orderingStub.returns(CURR_SELECTED);

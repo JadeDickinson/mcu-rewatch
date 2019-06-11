@@ -8,10 +8,10 @@ import { Movie, OrderingMap, WatchMap, MovieIdentifier } from "./types";
  */
 export default class MovieSeries {
 
-    private name : string;
-    private movies : Movie[];
-    private orderings : OrderingMap;
-    private repository : MovieRepository;
+    private name: string;
+    private movies: Movie[];
+    private orderings: OrderingMap;
+    private repository: MovieRepository;
 
     /**
      * Constructs a {@link MovieSeries} instance
@@ -21,7 +21,7 @@ export default class MovieSeries {
      * @param orderings a map of watch orders
      * @param repository high-level data repository
      */
-    public constructor(name : string, movies : Movie[], orderings : OrderingMap, repository : MovieRepository) {
+    public constructor(name: string, movies: Movie[], orderings: OrderingMap, repository: MovieRepository) {
         this.name = name;
         this.movies = movies;
         this.orderings = orderings;
@@ -33,7 +33,7 @@ export default class MovieSeries {
      * 
      * @returns number representing total number of movies
      */
-    public getNumberOfMovies() : number {
+    public getNumberOfMovies(): number {
         return this.movies.length;
     }
 
@@ -77,7 +77,7 @@ export default class MovieSeries {
      * 
      * @returns current ordering or empty string if no current ordering available
      */
-    public getCurrentOrderingName() : string {
+    public getCurrentOrderingName(): string {
         let currentOrdering: string = this.repository.fetchCurrentOrdering(this.name);
         return currentOrdering != null ? currentOrdering : "";
     }
@@ -87,7 +87,7 @@ export default class MovieSeries {
      * 
      * @returns map of movie ID to watched pairs
      */
-    public getMovieWatchedData() : WatchMap {
+    public getMovieWatchedData(): WatchMap {
         return this.repository.fetchMovieWatchData(this.generateMovieIdentifiers());
     }
 
@@ -97,7 +97,7 @@ export default class MovieSeries {
      * @param movieID ID of movie to update status for
      * @param watched whether this movie is now watched or not
      */
-    public saveWatchedStatus(movieID : number, watched : boolean) : void {
+    public saveWatchedStatus(movieID: number, watched: boolean): void {
         this.repository.saveWatchedStatus(this.name, movieID, watched);
     }
 
@@ -106,11 +106,11 @@ export default class MovieSeries {
      * 
      * @param orderingName name of new current ordering for this movie series
      */
-    public saveCurrentOrdering(orderingName : string) : void {
+    public saveCurrentOrdering(orderingName: string): void {
         this.repository.saveCurrentOrdering(this.name, orderingName);
     }
 
-    private generateMovieIdentifiers() : MovieIdentifier[] {
+    private generateMovieIdentifiers(): MovieIdentifier[] {
         return this.movies.map((movie) => {
             return {
                 storageID: createMovieStorageIdentifier(this.name, movie.id),

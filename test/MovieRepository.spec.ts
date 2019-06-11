@@ -20,24 +20,24 @@ class MockStorage implements Storage {
 
 const REAL_IS_STORAGE_AVAILABLE = require.cache[require.resolve("../site/lib/util")].exports.isStorageAvailable;
 
-function mockIsStorageAvailable(result : boolean) : void {
+function mockIsStorageAvailable(result: boolean): void {
     const isStorageAvailableStub = stub();
     isStorageAvailableStub.returns(result);
 
     require.cache[require.resolve("../site/lib/util")].exports.isStorageAvailable = isStorageAvailableStub;
 }
 
-function clearIsStorageAvailableMock() : void {
+function clearIsStorageAvailableMock(): void {
     require.cache[require.resolve("../site/lib/util")].exports.isStorageAvailable = REAL_IS_STORAGE_AVAILABLE;
 }
 
 describe("MovieRepository", () => {
 
-    let movieRepository : MovieRepository;
-    let storage : MockStorage;
-    let storageMock : SinonMock;
+    let movieRepository: MovieRepository;
+    let storage: MockStorage;
+    let storageMock: SinonMock;
 
-    const MOVIE_SERIES_NAME : string = "movie-series";
+    const MOVIE_SERIES_NAME: string = "movie-series";
 
     beforeEach(() => {
         storageMock = mock(MockStorage.prototype);
@@ -47,22 +47,22 @@ describe("MovieRepository", () => {
     
     describe("fetchMovieWatchData", () => {
         const MOVIE_ID = 1;
-        const EXPECTED_ARG : string = createMovieStorageIdentifier(MOVIE_SERIES_NAME, MOVIE_ID);
+        const EXPECTED_ARG: string = createMovieStorageIdentifier(MOVIE_SERIES_NAME, MOVIE_ID);
         const EXPECTED_RET_VALUE: string = "true";
-        const MOVIE_IDENTIFIERS_FIXTURE : MovieIdentifier[] = [
+        const MOVIE_IDENTIFIERS_FIXTURE: MovieIdentifier[] = [
             {
                 id: MOVIE_ID,
                 storageID: EXPECTED_ARG
             }
         ];
-        const WATCH_MAP_FIXTURE : WatchMap = {
+        const WATCH_MAP_FIXTURE: WatchMap = {
             [1]: true
         };
 
         it("should get the movie watch data from storage", () => {
             storageMock.expects("getItem").once().withExactArgs(EXPECTED_ARG).returns(EXPECTED_RET_VALUE);
 
-            let watchInfo : WatchMap = movieRepository.fetchMovieWatchData(MOVIE_IDENTIFIERS_FIXTURE);
+            let watchInfo: WatchMap = movieRepository.fetchMovieWatchData(MOVIE_IDENTIFIERS_FIXTURE);
 
             storageMock.verify();
             expect(Object.keys(watchInfo).length).to.equal(1);
@@ -95,7 +95,7 @@ describe("MovieRepository", () => {
         it("should have watch data of false if null is returned from storage", () => {
             storageMock.expects("getItem").once().withExactArgs(EXPECTED_ARG).returns(null);
 
-            let watchInfo : WatchMap = movieRepository.fetchMovieWatchData(MOVIE_IDENTIFIERS_FIXTURE);
+            let watchInfo: WatchMap = movieRepository.fetchMovieWatchData(MOVIE_IDENTIFIERS_FIXTURE);
 
             storageMock.verify();
             expect(Object.keys(watchInfo).length).to.equal(1);
@@ -109,13 +109,13 @@ describe("MovieRepository", () => {
     });
 
     describe("fetchCurrentOrdering", () => {
-        const EXPECTED_ARG : string = createMovieOrderingIdentifier(MOVIE_SERIES_NAME);
-        const ORDERING_FIXTURE : string = "my-ordering";
+        const EXPECTED_ARG: string = createMovieOrderingIdentifier(MOVIE_SERIES_NAME);
+        const ORDERING_FIXTURE: string = "my-ordering";
 
         it("should get the current ordering name from storage", () => {
             storageMock.expects("getItem").once().withExactArgs(EXPECTED_ARG).returns(ORDERING_FIXTURE);
             
-            let currOrdering : string = movieRepository.fetchCurrentOrdering(MOVIE_SERIES_NAME);
+            let currOrdering: string = movieRepository.fetchCurrentOrdering(MOVIE_SERIES_NAME);
 
             storageMock.verify();
             expect(currOrdering).to.equal(ORDERING_FIXTURE);
@@ -151,8 +151,8 @@ describe("MovieRepository", () => {
     });
 
     describe("saveWatchedStatus", () => {
-        const MOVIE_ID : number = 1;
-        const WATCHED_STATUS_FIXTURE : boolean = true;
+        const MOVIE_ID: number = 1;
+        const WATCHED_STATUS_FIXTURE: boolean = true;
         const EXPECTED_ARGS: string[] = [createMovieStorageIdentifier(MOVIE_SERIES_NAME, MOVIE_ID), WATCHED_STATUS_FIXTURE.toString()];
         
         it("should save watch data to storage", () => {

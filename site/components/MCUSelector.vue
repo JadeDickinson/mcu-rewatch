@@ -40,7 +40,7 @@ export default class MCUSelector extends MCUSelectorVue {
         return this.currentlySelected;
     }
 
-    set selected (value : string) {
+    set selected (value: string) {
         this.currentlySelected = value;
         this.movieModel.saveCurrentOrdering(value);
         this.$emit(UPDATE_ORDER_ACTION, value);

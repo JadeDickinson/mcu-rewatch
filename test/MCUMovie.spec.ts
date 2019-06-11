@@ -21,7 +21,7 @@ describe("MCUMovie", () => {
     });
 
     it("should have the 'movie' class", () => {
-        let imgElem : Wrapper<Vue> = wrapper.find("img");
+        let imgElem: Wrapper<Vue> = wrapper.find("img");
 
         expect(imgElem.classes()).to.contain("movie");
     });
@@ -33,7 +33,7 @@ describe("MCUMovie", () => {
 
         await Vue.nextTick();
 
-        let imgElem : Wrapper<Vue> = wrapper.find("img");
+        let imgElem: Wrapper<Vue> = wrapper.find("img");
 
         expect(imgElem.classes()).to.contain("grayscale");
     });
@@ -66,9 +66,9 @@ describe("MCUMovie", () => {
     });
 
     describe("toggleWatch", () => {
-        const MOVIE_ID_FIXTURE : number = 5;
+        const MOVIE_ID_FIXTURE: number = 5;
 
-        let movieSeriesMock : SinonMock;
+        let movieSeriesMock: SinonMock;
 
         beforeEach(() => {
             wrapper.setProps({

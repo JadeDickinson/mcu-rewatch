@@ -32,7 +32,7 @@ export default {
         }
     },
     methods: {
-        updateOrderingSelection: function(variable : string) {
+        updateOrderingSelection: function(variable: string) {
             this.selectedOrder = variable;
         }
     },

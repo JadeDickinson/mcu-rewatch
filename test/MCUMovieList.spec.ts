@@ -8,10 +8,10 @@ import MovieSeries from "../site/lib/MovieSeries";
 describe("MCUMovieList", () => {
     let wrapper: Wrapper<MCUMovieList>;
 
-    let movieModelStub : MovieSeries;
-    let mockGetMovieWatchedData : SinonStub;
+    let movieModelStub: MovieSeries;
+    let mockGetMovieWatchedData: SinonStub;
 
-    const TEST_MOVIES : Movie[] = [
+    const TEST_MOVIES: Movie[] = [
         {
             title: "Movie 1",
             id: 1
@@ -22,7 +22,7 @@ describe("MCUMovieList", () => {
         }
     ];
 
-    const TEST_ORDERINGS : OrderingMap = {
+    const TEST_ORDERINGS: OrderingMap = {
         "test": [1,2]
     };
 
@@ -38,7 +38,7 @@ describe("MCUMovieList", () => {
             },
             computed: {
                 items: function() {
-                    return TEST_MOVIES.map((elem : any) => {
+                    return TEST_MOVIES.map((elem: any) => {
                         return elem;
                     });
                 }
@@ -68,7 +68,7 @@ describe("MCUMovieList", () => {
             }
         });
 
-        TEST_MOVIES.forEach((elem : Movie, index) => {
+        TEST_MOVIES.forEach((elem: Movie, index) => {
             expect(wrapper.vm.items[index].id).to.equal(elem.id);
         });
     });
