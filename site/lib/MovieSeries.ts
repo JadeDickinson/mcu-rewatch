@@ -59,7 +59,7 @@ export default class MovieSeries {
         }
 
         return this.orderings[orderName].map((movieID) => {
-            return this.movies[movieID];
+            return this.movies[movieID - 1];
         });
     }
 

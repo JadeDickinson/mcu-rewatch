@@ -13,13 +13,13 @@ import MCUSelector from "./components/MCUSelector.vue";
 import MovieSeries from "./lib/MovieSeries";
 import MovieRepository from "./lib/MovieRepository";
 import { Movie, OrderingMap } from './lib/types';
-import { NUMBER_OF_MCU_MOVIES } from './lib/constants';
+import { NUMBER_OF_MCU_MOVIES, DEFAULT_MCU_ORDER } from './lib/constants';
 
 import * as movies from "./assets/data/movies.json";
 import * as importedOrderings from "./assets/data/orderings.json";
 
 const orderings: OrderingMap = Object.assign(importedOrderings, {
-    release: [...Array(NUMBER_OF_MCU_MOVIES).keys()]
+    release: [...Array(NUMBER_OF_MCU_MOVIES)].map((_, index) => index + 1)
 });
 
 const mcuMovies = new MovieSeries("mcu", movies, orderings, new MovieRepository(localStorage));
@@ -27,7 +27,7 @@ const mcuMovies = new MovieSeries("mcu", movies, orderings, new MovieRepository(
 export default {
     data: function() {
         return {
-            selectedOrder: "chronological",
+            selectedOrder: DEFAULT_MCU_ORDER,
             movieModel: mcuMovies
         }
     },

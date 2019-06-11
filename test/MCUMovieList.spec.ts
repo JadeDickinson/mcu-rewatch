@@ -23,7 +23,7 @@ describe("MCUMovieList", () => {
     ];
 
     const TEST_ORDERINGS : OrderingMap = {
-        "test": [0,1]
+        "test": [1,2]
     };
 
     beforeEach(() => {
