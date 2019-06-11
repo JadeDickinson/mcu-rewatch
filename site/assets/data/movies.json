@@ -60,7 +60,7 @@
         "id": 15
     },
     {
-        "title": "Spiderman: Homecoming",
+        "title": "Spider-Man: Homecoming",
         "id": 16
     },
     {
@@ -86,5 +86,9 @@
     {
         "title": "Avengers: Endgame",
         "id": 22
+    },
+    {
+        "title": "Spider-Man: Far from Home",
+        "id": 23
     }
 ]
