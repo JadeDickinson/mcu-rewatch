@@ -3,6 +3,9 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
+const PROD_DEVTOOL = "source-map";
+const DEV_DEVTOOL = "cheap-module-eval-source-map";
+
 function getWebpackMode(nodeEnv) {
     if (!nodeEnv || (nodeEnv !== "production" && nodeEnv !== "none")) {
         return "development";
@@ -10,10 +13,14 @@ function getWebpackMode(nodeEnv) {
     return nodeEnv;
 }
 
+function isProduction(nodeEnv) {
+    return nodeEnv === "production";
+}
+
 module.exports = {
     entry: "./site/index.ts",
     mode: getWebpackMode(process.env.NODE_ENV),
-    devtool: "inline-source-map",
+    devtool: isProduction(process.env.NODE_ENV) ? PROD_DEVTOOL : DEV_DEVTOOL,
     module: {
         rules: [
             {
@@ -61,5 +68,16 @@ module.exports = {
             }
         ]),
         new VueLoaderPlugin()
-    ]
+    ],
+    optimization: {
+        splitChunks: {
+            chunks: "all",
+            cacheGroups: {
+                node: {
+                    name: "node_modules",
+                    test: /node_modules/
+                }
+            }
+        }
+    }
 };
