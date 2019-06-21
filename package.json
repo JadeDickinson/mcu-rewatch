@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "ts-node app.ts",
-    "build": "webpack --verbose",
+    "build": "webpack",
     "vuetype": "vuetype site/components",
     "dl-posters": "ts-node build/dl-posters.ts",
     "full-build": "npm run dl-posters && npm run build",
