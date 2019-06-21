@@ -71,13 +71,7 @@ module.exports = {
     ],
     optimization: {
         splitChunks: {
-            chunks: "all",
-            cacheGroups: {
-                node: {
-                    name: "node_modules",
-                    test: /node_modules/
-                }
-            }
+            chunks: "all"
         }
     }
 };
