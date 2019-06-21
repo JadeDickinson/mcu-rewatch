@@ -1,4 +1,4 @@
-var webpackConfig = require("./webpack.config.js");
+const webpackConfig = require("./webpack.config.js");
 
 process.env.CHROME_BIN = require("puppeteer").executablePath();
 
@@ -9,7 +9,13 @@ module.exports = function(config) {
         preprocessors: {
             "**/*.spec.ts": ["webpack", "sourcemap"]
         },
-        webpack: webpackConfig,
+        webpack: Object.assign(webpackConfig, {
+            optimization: {
+                splitChunks: {
+                    chunks: "async"
+                }
+            }
+        }),
         reporters: ["spec", "junit"],
         browsers: ["ChromeHeadless"],
         junitReporter: {
