@@ -10,6 +10,12 @@ const BASE_DOWNLOAD_PATH: string = path.resolve(ROOT_PATH, "site", "assets", "im
 const BASE_BUILD_PATH: string = path.resolve(ROOT_PATH, "build");
 const BASE_TEST_IMG_PATH: string = path.resolve(ROOT_PATH, "test", "assets", "img");
 
+if (!fs.existsSync(BASE_DOWNLOAD_PATH)) {
+    console.log("img directory doesn't exist, creating it...");
+    fs.mkdirSync(BASE_DOWNLOAD_PATH);
+    console.log("img directory '" + BASE_DOWNLOAD_PATH + "' created.");
+}
+
 let files: string[] = fs.readdirSync(BASE_DOWNLOAD_PATH);
 
 let fileMap: {[key: string]: boolean} = {};
@@ -17,6 +23,9 @@ let fileMap: {[key: string]: boolean} = {};
 files.forEach((file) => {
     fileMap[file] = true;
 });
+
+let downloadMapStr: Buffer = fs.readFileSync(path.resolve(BASE_BUILD_PATH, "movie_posters.json"));
+let downloadMap: string = JSON.parse(downloadMapStr.toString());
 
 for (let i = 1; i <= NUMBER_OF_MCU_MOVIES; i++) {
     // does the file exist in the images folder?
@@ -29,17 +38,22 @@ for (let i = 1; i <= NUMBER_OF_MCU_MOVIES; i++) {
         let destinationPath: string = path.resolve(BASE_DOWNLOAD_PATH, filename);
         if (process.env.NODE_ENV === "test") {
             console.log("Copying test poster to " + destinationPath);
-            fs.promises.copyFile(path.resolve(BASE_TEST_IMG_PATH, "test.jpg"), destinationPath)
-                .then(() => console.log("Test poster copied to " + destinationPath))
-                .catch(() => console.error("Error copying poster to " + destinationPath))
+            copyPlaceholderPoster(path.resolve(BASE_TEST_IMG_PATH, "test.jpg"), destinationPath);
         } else {
-            let downloadMapStr: Buffer = fs.readFileSync(path.resolve(BASE_BUILD_PATH, "movie_posters.json"));
-            let downloadMap: string = JSON.parse(downloadMapStr.toString());
             let dlFilename: string = downloadMap[i];
             console.log("Downloading poster " + dlFilename + " from IMDB to " + destinationPath + "...");
-            request(dlFilename).pipe(fs.createWriteStream(destinationPath)).on("close", () => {
+            request(dlFilename).on("error", (err) => {
+                console.error("Error downloading poster. '" + err + "' - Using fallback image.");
+                copyPlaceholderPoster(path.resolve(BASE_TEST_IMG_PATH, "test.jpg"), destinationPath);
+            }).pipe(fs.createWriteStream(destinationPath)).on("close", () => {
                 console.log("Downloaded poster to " + destinationPath);
             });
         }
     }
+}
+
+function copyPlaceholderPoster(sourcePath: string, destPath: string) {
+    fs.promises.copyFile(sourcePath, destPath)
+        .then(() => console.log("Placeholder poster copied to " + destPath))
+        .catch(() => console.error("Error copying placeholder poster to " + destPath));
 }
