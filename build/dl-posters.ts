@@ -49,7 +49,7 @@ for (let i = 1; i <= NUMBER_OF_MCU_MOVIES; i++) {
             console.log("Downloading poster " + dlFilename + " from IMDB to " + destinationPath + "...");
             request(dlFilename).on("error", (err) => {
                 console.error("Error downloading poster. '" + err + "' - Using fallback image.");
-                copyPlaceholderPoster(path.resolve(BASE_TEST_IMG_PATH, "test.jpg"), destinationPath);
+                copyPlaceholderPoster(path.resolve(BASE_BUILD_PATH, "placeholder.jpg"), destinationPath);
                 writeRetryFile(filename, getRetryPath(destinationPath));
             }).pipe(fs.createWriteStream(destinationPath)).on("close", () => {
                 console.log("Downloaded poster to " + destinationPath);
