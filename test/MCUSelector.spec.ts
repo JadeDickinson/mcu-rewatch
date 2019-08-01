@@ -8,7 +8,7 @@ import { DEFAULT_MCU_ORDER } from "../site/lib/constants";
 import * as sinonTest from "sinon-test";
 import * as sinon from "sinon";
 
-const test = sinonTest.configureTest(sinon);
+const test = sinonTest(sinon);
 
 describe("MCUSelector", () => {
     let wrapper: Wrapper<MCUSelector>;
