@@ -26,7 +26,7 @@
     "@types/request": "^2.48.1",
     "@types/sinon": "^7.0.11",
     "@types/sinon-chai": "^3.2.2",
-    "@types/sinon-test": "^1.0.7",
+    "@types/sinon-test": "^2.4.0",
     "@vue/test-utils": "^1.0.0-beta.29",
     "babel-loader": "^8.0.5",
     "chai": "^4.2.0",
