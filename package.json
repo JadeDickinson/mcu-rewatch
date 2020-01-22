@@ -37,7 +37,7 @@
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.6",
-    "@types/sinon": "^7.0.11",
+    "@types/sinon": "^7.5.1",
     "@types/sinon-chai": "^3.2.2",
     "@types/sinon-test": "^2.4.0",
     "@vue/test-utils": "^1.0.0-beta.29",
