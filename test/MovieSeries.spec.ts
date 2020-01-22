@@ -7,7 +7,7 @@ import MovieRepository from "../site/lib/MovieRepository";
 import { Movie, WatchMap } from "../site/lib/types";
 import { OrderingMap } from "../site/lib/types";
 
-const test = sinonTest.configureTest(sinon);
+const test = sinonTest(sinon);
 
 const STORAGE_NOT_AVAILABLE_MESSAGE = "storage not available";
 
