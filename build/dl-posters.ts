@@ -31,7 +31,7 @@ for (let i = 1; i <= NUMBER_OF_MCU_MOVIES; i++) {
             console.log("Copying test poster to " + destinationPath);
             fs.promises.copyFile(path.resolve(BASE_TEST_IMG_PATH, "test.jpg"), destinationPath)
                 .then(() => console.log("Test poster copied to " + destinationPath))
-                .catch(() => console.error("Error copying poster to " + destinationPath))
+                .catch(() => console.error("Error copying poster to " + destinationPath));
         } else {
             let downloadMapStr: Buffer = fs.readFileSync(path.resolve(BASE_BUILD_PATH, "movie_posters.json"));
             let downloadMap: string = JSON.parse(downloadMapStr.toString());
